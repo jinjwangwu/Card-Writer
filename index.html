@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffe7f0">
+<meta name="description" content="A playful, private, offline birthday card writer. Personalized birthday wishes, no panic required.">
+<title>The Panic-Free Birthday Card Writer</title>
+<style>
+:root{color-scheme:light;--ink:#422a3c;--muted:#816a7b;--pink:#f4418b;--pink-dark:#b62568;--blush:#ffe3ee;--lilac:#7850a3;--line:#efd2de;--white:#fff;--shadow:0 18px 48px rgba(152,51,97,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;padding:30px 18px 45px;color:var(--ink);background:radial-gradient(circle at 5% 10%,#ffcbde 0,transparent 27%),radial-gradient(circle at 95% 7%,#ffefd0 0,transparent 24%),radial-gradient(circle at 85% 95%,#ffcede 0,transparent 30%),linear-gradient(140deg,#fff2f7 10%,#fffaf5 65%,#fff1f7);font:15px/1.5 "Trebuchet MS","Segoe UI",Arial,sans-serif}
+button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:disabled{opacity:.55;cursor:not-allowed}button:focus-visible,input:focus-visible{outline:3px solid var(--lilac);outline-offset:3px}.app{width:min(1160px,100%);margin:0 auto}.hero{text-align:center;position:relative;margin:0 auto 30px}.eyebrow{display:inline-block;padding:7px 16px;border:1px solid #f7c5d9;border-radius:30px;background:#ffffffd9;color:#ac2b69;font-weight:800;font-size:11px;letter-spacing:1.7px;text-transform:uppercase}.hero h1{font-size:clamp(2.1rem,5.4vw,3.9rem);line-height:1.12;letter-spacing:-1.7px;margin:16px auto 12px;font-weight:900;color:var(--pink-dark)}.hero h1 span{color:var(--lilac)}.hero p{max-width:610px;margin:0 auto;color:#72536b;font-size:16px}.sparkle{position:absolute;font-size:30px;animation:bob 4s ease-in-out infinite}.sparkle.one{left:5%;top:50px}.sparkle.two{right:7%;top:62px;animation-delay:-2s}@keyframes bob{50%{transform:translateY(-10px) rotate(8deg)}}
+.workspace{display:grid;grid-template-columns:minmax(305px,.94fr) minmax(0,1.06fr);gap:24px;align-items:stretch}.panel,.history{border:1px solid #fff;border-radius:23px;background:#ffffffed;box-shadow:var(--shadow);padding:28px;min-width:0}.panel-title{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:24px}.panel-title h2,.history h2{font-size:23px;line-height:1.2;margin:0;font-weight:900;letter-spacing:-.5px}.panel-title p,.history-header p{margin:7px 0 0;color:var(--muted);font-size:12px}.icon-tile{height:45px;width:45px;display:grid;place-items:center;border-radius:15px;background:var(--blush);font-size:23px;flex-shrink:0}.fields{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(100px,.7fr);gap:17px 13px}.field.full{grid-column:1/-1}.field label{display:block;font-weight:800;font-size:13px;margin-bottom:7px;color:#573249}.field input{width:100%;height:48px;border:1.5px solid #efd4df;border-radius:12px;background:#fffafd;padding:0 13px;color:var(--ink);font-size:15px;min-width:0;transition:border .2s,box-shadow .2s}.field input::placeholder{color:#ae92a4}.field input:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 4px #ff4f9b1b}.help{font-size:11px;color:#978094;margin:5px 0 0}.vibes{border:0;padding:0;margin:26px 0 0;min-width:0}.vibes legend{font-size:15px;font-weight:900;padding:0;margin-bottom:12px}.vibe-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.vibe{position:relative;cursor:pointer;min-width:0}.vibe input{position:absolute;width:1px;height:1px;opacity:0}.vibe-face{min-height:66px;display:flex;align-items:center;gap:9px;padding:10px;border-radius:14px;border:2px solid #f3dcea;background:#fff9fc;transition:background .2s,border-color .2s,transform .2s}.vibe:hover .vibe-face{border-color:#f69ec2;transform:translateY(-2px)}.vibe input:checked+.vibe-face{background:#ffe0ed;border-color:var(--pink);color:#9f175d}.vibe input:focus-visible+.vibe-face{outline:3px solid var(--lilac);outline-offset:3px}.emoji{font-size:23px;line-height:1;flex-shrink:0}.vibe-name{display:block;font-size:12px;line-height:1.3;font-weight:900}.vibe-desc{display:block;font-size:10px;margin-top:3px;color:#95758a}.actions{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:11px}.btn{display:flex;align-items:center;justify-content:center;gap:8px;border-radius:13px;border:2px solid transparent;min-height:48px;padding:10px 14px;font-size:13px;font-weight:900;transition:transform .18s,background .18s,box-shadow .18s}.btn:not(:disabled):hover{transform:translateY(-2px)}.primary{grid-column:1/-1;min-height:56px;background:var(--pink);color:#fff;font-size:16px;box-shadow:0 6px 0 #c9296f}.primary:hover{background:#e92f7c}.primary:active{box-shadow:0 2px 0 #c9296f;transform:translateY(3px)!important}.secondary{background:var(--lilac);color:white}.secondary:hover{background:#623e87}.outline{background:white;color:#ad286a;border-color:#edbdd2}.outline:hover{background:#ffecf4}.privacy{font-size:11px;color:#977d8e;text-align:center;margin:18px 0 0}.preview{display:flex;flex-direction:column;background:linear-gradient(145deg,#fff5fa,#fffdfa)}.tag{flex-shrink:0;border:1px solid #fbd0df;background:#fff;color:#b63274;border-radius:30px;padding:6px 10px;font-weight:800;font-size:10px;text-align:center}.stage{flex:1;min-height:365px;display:flex;align-items:center;justify-content:center;border:2px dashed #f5c4d8;border-radius:20px;padding:24px 20px;background:radial-gradient(circle at 7% 84%,#ffc1d8 0 7px,transparent 8px),radial-gradient(circle at 94% 14%,#ffd783 0 6px,transparent 7px),radial-gradient(circle at 86% 84%,#d7ade7 0 5px,transparent 6px),linear-gradient(145deg,#ffe5ee,#fff4e7)}.birthday-card{width:100%;max-width:480px;min-height:270px;position:relative;overflow:hidden;border:1px solid #f1dce2;border-radius:13px;background:#fffdf6;padding:38px 29px 32px;text-align:center;transform:rotate(-1deg);box-shadow:7px 9px 0 #f7aec9,10px 16px 25px #b747722e}.birthday-card:before,.birthday-card:after{content:"✦";position:absolute;color:#eaa0c0;font-size:24px}.birthday-card:before{top:12px;left:16px}.birthday-card:after{bottom:12px;right:15px}.ribbon{position:absolute;right:-32px;top:13px;width:125px;background:#ffd5e4;color:#a72a68;transform:rotate(37deg);font-size:10px;font-weight:900;letter-spacing:1px;padding:4px}.card-icon{font-size:35px}.birthday-card h3{font-size:clamp(21px,3vw,28px);line-height:1.25;margin:11px 0 15px;color:var(--pink-dark);overflow-wrap:anywhere}.birthday-card p{max-width:400px;margin:0 auto;line-height:1.8;font-size:15px;color:#624458;white-space:pre-wrap;overflow-wrap:anywhere}.empty p{color:#957b8d;font-size:14px}.card-bottom{display:block;margin-top:22px;font-size:19px;letter-spacing:6px;color:#d14c88}.pop{animation:appear .35s ease-out both}@keyframes appear{from{opacity:.45;transform:translateY(12px) rotate(1deg) scale(.96)}to{opacity:1;transform:rotate(-1deg) scale(1)}}.preview-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;font-size:12px;color:#967789}.preview-foot strong{color:#ae3373}.status{min-height:19px;margin-top:11px;color:#ad2869;font-weight:700;font-size:12px;text-align:center}.history{margin-top:24px}.history-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:19px}.count{font-size:12px;color:#ae2e6e;background:var(--blush);font-weight:900;padding:7px 12px;border-radius:30px;white-space:nowrap}.history-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;list-style:none;margin:0;padding:0}.history-item{border:1px solid #f2d4e2;border-radius:15px;background:#fffafd;padding:18px;min-width:0}.history-item:first-child{background:#fff0f6;border-color:#f4aecb}.history-line{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px}.recipient{font-size:15px;font-weight:900;color:#9c2a66;margin:0;overflow-wrap:anywhere}.date{font-size:11px;color:#967d8d}.history-vibe{display:inline-block;margin-top:9px;font-size:10px;font-weight:850;border-radius:25px;background:white;padding:4px 9px;color:#83536d}.history-text{font-size:13px;line-height:1.73;white-space:pre-wrap;overflow-wrap:anywhere;margin:12px 0}.history-actions{border-top:1px dashed #e9c4d8;padding-top:11px;display:flex;align-items:center;justify-content:space-between;gap:10px}.copy-small{border:1px solid #ebb9d0;color:#ad2b6b;background:white;border-radius:9px;padding:6px 11px;font-size:11px;font-weight:850}.copy-small:hover{background:#ffe6f1}.history-empty{grid-column:1/-1;text-align:center;padding:35px 15px;border:2px dashed #f4c6da;border-radius:15px;color:#96788b;background:#fffafd}.history-empty b{display:block;color:#855b72;margin:6px 0}.history-empty p{margin:0;font-size:12px}.footnote{text-align:center;font-size:12px;color:#977388;margin-top:27px}.footnote span{color:var(--pink)}
+@media(max-width:850px){.workspace{grid-template-columns:1fr}.stage{min-height:345px}.birthday-card{max-width:560px}}
+@media(max-width:600px){body{padding:18px 12px 30px}.hero{margin-bottom:23px}.hero h1{font-size:clamp(2rem,8.4vw,2.8rem);letter-spacing:-1px}.hero p{font-size:13px}.sparkle{display:none}.workspace{gap:16px}.panel,.history{padding:20px;border-radius:18px}.panel-title h2,.history h2{font-size:20px}.fields{gap:14px 10px}.vibe-face{padding:9px 7px;gap:7px}.emoji{font-size:20px}.vibe-name{font-size:11px}.stage{padding:20px 15px;min-height:335px}.birthday-card{padding:34px 21px 29px}.birthday-card p{font-size:14px}.history-list{grid-template-columns:1fr}}
+@media(max-width:350px){.vibe-grid{grid-template-columns:1fr}.vibe-face{min-height:51px}.vibe-desc{display:inline;margin-left:3px}.actions{grid-template-columns:1fr}.primary{grid-column:auto}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="hero">
+    <span class="sparkle one" aria-hidden="true">💖</span><span class="sparkle two" aria-hidden="true">✨</span>
+    <span class="eyebrow">🎂 Your birthday wish headquarters</span>
+    <h1>The Panic-Free<br><span>Birthday Card Writer</span></h1>
+    <p>Forgot how to be funny on command? We've got you. Make a birthday message that's personal, playful, and way better than just “HBD!”</p>
+  </header>
+
+  <div class="workspace">
+    <section class="panel" aria-labelledby="details-title">
+      <div class="panel-title"><div><h2 id="details-title">First, the birthday human.</h2><p>A few details make the magic happen.</p></div><span class="icon-tile" aria-hidden="true">📝</span></div>
+      <div class="fields">
+        <div class="field"><label for="name">Their name</label><input id="name" maxlength="60" type="text" placeholder="e.g. Jamie" autocomplete="off"></div>
+        <div class="field"><label for="age">Turning</label><input id="age" type="number" min="1" max="125" step="1" inputmode="numeric" placeholder="Age"></div>
+        <div class="field full"><label for="hobby">Their favorite hobby</label><input id="hobby" maxlength="90" type="text" placeholder="e.g. baking, gaming, hiking..." autocomplete="off"><p class="help">The more specific, the more personal the card.</p></div>
+        <div class="field full"><label for="relationship">Relationship to me</label><input id="relationship" maxlength="90" type="text" placeholder="e.g. best friend, sister, coworker..." autocomplete="off"></div>
+      </div>
+      <fieldset class="vibes"><legend>🎭 Pick your birthday vibe</legend><div class="vibe-grid">
+        <label class="vibe"><input name="vibe" type="radio" value="light" checked><span class="vibe-face"><span class="emoji" aria-hidden="true">😜</span><span><span class="vibe-name">Light &amp; silly</span><span class="vibe-desc">Maximum giggles</span></span></span></label>
+        <label class="vibe"><input name="vibe" type="radio" value="roast"><span class="vibe-face"><span class="emoji" aria-hidden="true">🔥</span><span><span class="vibe-name">Gentle roast</span><span class="vibe-desc">Lovingly savage</span></span></span></label>
+        <label class="vibe"><input name="vibe" type="radio" value="pun"><span class="vibe-face"><span class="emoji" aria-hidden="true">🥁</span><span><span class="vibe-name">Pun-heavy</span><span class="vibe-desc">Dad-joke energy</span></span></span></label>
+        <label class="vibe"><input name="vibe" type="radio" value="sweet"><span class="vibe-face"><span class="emoji" aria-hidden="true">🥹</span><span><span class="vibe-name">Sweet-funny</span><span class="vibe-desc">Awws and LOLs</span></span></span></label>
+      </div></fieldset>
+      <div class="actions"><button type="button" class="btn primary" id="new-card">✨ New Card 🎉</button><button type="button" class="btn secondary" id="copy-latest" disabled>📋 Copy Latest</button><button type="button" class="btn outline" id="clear">🧹 Clear</button></div>
+      <p class="privacy">🔒 Private, offline, and delightfully drama-free.</p>
+    </section>
+
+    <section class="panel preview" aria-labelledby="preview-title">
+      <div class="panel-title"><div><h2 id="preview-title">Your masterpiece</h2><p>Ready for a card, text, or birthday speech.</p></div><span class="tag" id="preview-tag">Waiting for magic ✨</span></div>
+      <div class="stage"><article class="birthday-card empty" id="birthday-card" aria-label="Birthday card preview"><div class="ribbon" aria-hidden="true">YAY!</div><div class="card-icon" id="card-icon" aria-hidden="true">💌</div><h3 id="card-title">Something fabulous goes here!</h3><p id="card-message">Fill in the details, choose a vibe, and hit “New Card” to make someone's birthday a little more legendary.</p><span class="card-bottom" aria-hidden="true">♥ ✦ ♥</span></article></div>
+      <div class="preview-foot"><span><strong>Pro tip:</strong> Hit New Card again for a fresh take!</span><span aria-hidden="true">🎈</span></div><div class="status" id="status" role="status" aria-live="polite"></div>
+    </section>
+  </div>
+
+  <section class="history" aria-labelledby="history-title"><div class="history-header"><div><h2 id="history-title">💌 The Card Hall of Fame</h2><p>Your creations, newest first. Copy a favorite anytime.</p></div><span class="count" id="history-count">0 cards</span></div><ol class="history-list" id="history-list"></ol></section>
+  <footer class="footnote">Made with <span>♥</span>, confetti, and absolutely no birthday panic.<br>Works offline · No accounts · No APIs · Just good vibes</footer>
+</main>
+<script>
+(function(){
+  'use strict';
+  const KEY='panicFreeBirthdayCards_v1', MAX_HISTORY=40;
+  const el=id=>document.getElementById(id);
+  const input={name:el('name'),age:el('age'),hobby:el('hobby'),relationship:el('relationship')};
+  const newButton=el('new-card'),copyButton=el('copy-latest'),clearButton=el('clear');
+  const title=el('card-title'),message=el('card-message'),icon=el('card-icon'),previewTag=el('preview-tag'),preview=el('birthday-card'),status=el('status'),list=el('history-list'),count=el('history-count');
+  const vibeNames={light:'Light & silly',roast:'Gentle roast',pun:'Pun-heavy',sweet:'Sweet-funny'};
+  const vibeIcons={light:'🎉',roast:'🔥',pun:'🥳',sweet:'💖'};
+  let history=loadHistory();
+  let previousMessage='';
+
+  function randomIndex(n){
+    if(n<=1)return 0;
+    if(typeof crypto!=='undefined'&&typeof crypto.getRandomValues==='function'){
+      const val=new Uint32Array(1),limit=Math.floor(4294967296/n)*n;
+      do{crypto.getRandomValues(val);}while(val[0]>=limit);
+      return val[0]%n;
+    }
+    return Math.floor(Math.random()*n);
+  }
+  const pick=a=>a[randomIndex(a.length)];
+  function shuffled(a){const b=a.slice();for(let i=b.length-1;i>0;i--){const j=randomIndex(i+1);[b[i],b[j]]=[b[j],b[i]];}return b;}
+  function tidy(s){return String(s||'').trim().replace(/\s+/g,' ').replace(/[.!?;,]+$/g,'').trim();}
+  function relationship(s){return tidy(s).replace(/^(?:my|a|an|the)\s+/i,'').trim();}
+  function getVibe(){return document.querySelector('input[name="vibe"]:checked').value;}
+  function getDetails(){
+    const ageValue=input.age.value.trim();
+    if(ageValue){const n=Number(ageValue);if(!Number.isInteger(n)||n<1||n>125||!input.age.validity.valid){input.age.setCustomValidity('Please enter a whole-number age from 1 to 125.');input.age.reportValidity();input.age.setCustomValidity('');input.age.focus();return null;}}
+    const name=tidy(input.name.value);
+    return {name:name||'birthday superstar',displayName:name||'Birthday superstar',age:ageValue?Number(ageValue):null,hobby:tidy(input.hobby.value),relationship:relationship(input.relationship.value),vibe:getVibe()};
+  }
+
+  const hobbyPuns=[
+    [/(baking|bake|bread|cakes?|cookies?|pastr(y|ies)|sourdough)/i,["I knead you to know your {hobby} skills are the best thing since sliced bread!","Your love of {hobby} is proof you're on a roll. Have a batter-than-ever birthday!","Here's hoping your next year of {hobby} is whisk-takingly wonderful!"]],
+    [/(cooking|cook|chef|food|recipes?|grill)/i,["Your love of {hobby} makes you one in a melon. Lettuce celebrate!","Here's to another year of {hobby}, spicing things up, and a little extra thyme for yourself.","May your {hobby} adventures be sweet, savory, and full of good taste!"]],
+    [/(gardening|garden|plants?|flowers?)/i,["Your love of {hobby} is blooming marvelous. You're kind of a big dill!","Your {hobby} skills are unbe-leaf-able. Hope your birthday is too!","May you have plenty of thyme for {hobby} and a day that really grows on you."]],
+    [/(reading|read|books?|novels?)/i,["Given your love of {hobby}, here's the plot twist: this chapter has extra cake!","May this chapter of {hobby} be novel, page-turning, and full of happy endings.","Your passion for {hobby} is one for the books. Happy birthday!"]],
+    [/(gaming|games?|gamer|minecraft|xbox|nintendo|playstation)/i,["Birthday level unlocked! May your {hobby} adventures bring double cake points.","Your {hobby} skills are epic. Hope today's loot includes cake and zero lag!","The next level of {hobby} awaits, but today's main quest is birthday snacks."]],
+    [/(music|singing|guitar|piano|drums?|violin|dancing|dance)/i,["Your love of {hobby} hits all the right notes. Have a chart-topping birthday!","May your next year of {hobby} be pitch-perfect and full of good vibrations.","Your {hobby} talents deserve a standing ovation. Have a note-worthy day!"]],
+    [/(hiking|hike|walking|trekking|climbing|mountain|camping)/i,["Your love of {hobby} deserves peak happiness. Have a summit-special birthday!","May the trail of {hobby} lead straight to a beautiful view and a big slice of cake.","Here's to {hobby}, reaching new heights, and having a hill-arious birthday!"]],
+    [/(painting|paint|drawing|sketch|art|craft|pottery|ceramic)/i,["With your love of {hobby}, I hope your birthday is a masterpiece. Hue deserve it!","Your {hobby} talents color everyone's world. Have a picture-perfect birthday!","May {hobby} keep you inspired; you're truly a work of heart."]],
+    [/(knitting|crochet|sewing|quilting|embroidery)/i,["Your love of {hobby} has me in stitches. Have a sew-amazing birthday!","May your {hobby} adventures be full of joy. I'm not spinning a yarn!","You're a cut above the rest at {hobby}. Have a sew-per day!"]],
+    [/(photography|photograph|camera|filmmaking)/i,["Hope your birthday develops into something picture-perfect, just like your love of {hobby}.","May {hobby} help you focus on the good stuff. You're truly a flash of brilliance!","You clearly have an eye for {hobby}. Have a snapshot-worthy birthday!"]],
+    [/(running|jogging|marathon|fitness|gym|workout|yoga)/i,["You go the extra mile with {hobby}, so this birthday deserves extra cake!","May {hobby} bring you strength, smiles, and plenty of rest between celebrations.","You're run-derful at making {hobby} look fun. Have an amazing birthday!"]],
+    [/(football|soccer|basketball|baseball|tennis|golf|hockey|volleyball|sport)/i,["Your love of {hobby} makes you the MVP of today. Birthday goal achieved!","May {hobby} bring you a winning streak. This birthday is a home run!","No penalties for extra cake today. Your {hobby} spirit deserves a victory dance!"]],
+    [/(travel|road trips?|exploring|adventure)/i,["Your love of {hobby} is first-class. Hope your next trip around the sun takes off!","May your {hobby} plans lead you to new places and plenty of cake stops.","Your passion for {hobby} is plane awesome. Hope this year goes places!"]],
+    [/(cat|dog|pet|animal)/i,["Your love of {hobby} is paws-itively wonderful. Have a fur-bulous birthday!","May your birthday be as purr-fect as your passion for {hobby}. No kitten around!","You're top dog when it comes to {hobby}. Hope today is fetching!"]]
+  ];
+  function hobbyPun(h){const hits=hobbyPuns.filter(([re])=>re.test(h));const line=hits.length?pick(pick(hits)[1]):pick([
+    'May your {hobby} adventures be cake-tacular. Yep, this wish really takes the cake!',
+    'Your love of {hobby} deserves a round of a-paws—or applause. Both work!',
+    'Keep enjoying {hobby} and have a fan-cake-tastic day. Now that\'s a birthday present!',
+    'Your dedication to {hobby} is gift-worthy. Consider this a present-tense situation!'
+  ]);return line.replace(/\{hobby\}/g,h);}
+
+  // Independent openings, personal details, and closings are recombined for variety.
+  const libraries={
+    light:{
+      open:[d=>`Happy birthday, ${d.name}! Your license to eat cake for breakfast has officially been renewed.`,d=>`Breaking news: ${d.name} has another birthday! Excessive celebrating is required.`,d=>`It's your birthday, ${d.name}! Please report immediately to the nearest cake.`,d=>`Happy birthday, ${d.name}! May your day sparkle brighter than a craft store explosion.`,d=>`Dear ${d.name}, congratulations on completing another successful lap around the sun.`,d=>`Attention, ${d.name}! The confetti committee has declared this day a national treasure.`,d=>`Happy birthday, ${d.name}! Today all questionable dessert decisions are officially festive.`,d=>`Surprise, ${d.name}! You are legally allowed to be extra today.`,d=>`Happy birthday, ${d.name}! I ordered you a parade but the balloons got carried away.`,d=>`It's your special day, ${d.name}! Time to party like tomorrow has no responsibilities.`],
+      age:[d=>`Turning ${d.age} looks suspiciously good on you. Please share your secrets.`,d=>`${d.age} years of being you? That's an impressive collection of plot twists.`,d=>`At ${d.age}, you're basically a limited-edition human. Very collectible.`,d=>`You've reached level ${d.age}, and the prize is unlimited birthday enthusiasm.`,d=>`${d.age} candles might be a fire hazard, so we'll just use a flashlight.`,d=>`Congratulations on ${d.age} years of becoming increasingly legendary.`],
+      hobby:[d=>`I hope you get loads of time for ${d.hobby}, with snacks and zero interruptions.`,d=>`May this year bring even more ${d.hobby}, happy adventures, and excellent desserts.`,d=>`Your enthusiasm for ${d.hobby} deserves its own fan club. I'd join.`,d=>`May ${d.hobby} bring you as much joy as finding extra fries at the bottom of the bag.`,d=>`I hope today's schedule includes ${d.hobby} and refusing to share the last cupcake.`],
+      rel:[d=>`Being able to call you my ${d.relationship} is pretty great, even if your snack opinions are questionable.`,d=>`As my ${d.relationship}, you've earned permanent access to my terrible jokes.`,d=>`I'm glad you're my ${d.relationship}; life is way more entertaining with you around.`,d=>`Having you as my ${d.relationship} means there's never a shortage of reasons to laugh.`,d=>`You're a top-tier ${d.relationship}, and I say that with authority.`],
+      extra:["Today should involve zero chores and at least one ridiculously good snack.","Your birthday itinerary: laugh, eat, repeat, and avoid responsibility.","May the surprises be delightful and the singing mercifully brief.","The only thing you should count today is how many slices of cake are left.","Wishing you the kind of day that requires a happy nap afterward."],
+      end:["Have the happiest, silliest, most wonderful birthday!","Go be fabulous. The world can handle it. Probably.","Now go make memories, preferably with frosting involved!","Sending confetti, cake, and unreasonable amounts of birthday cheer!","Stay weird, stay wonderful, and save me a slice!","Here's to more laughs, more adventures, and more cake!"]
+    },
+    roast:{
+      open:[d=>`Happy birthday, ${d.name}! You're aging like fine wine… or at least a confident juice box.`,d=>`Congratulations, ${d.name}! You've survived another year of your own decisions. Inspiring.`,d=>`Well, well, well, ${d.name}. Look who's getting older and still acting brand-new.`,d=>`Happy birthday, ${d.name}! You're living proof that maturity is optional.`,d=>`It's your birthday, ${d.name}! Another year wiser, according to your marketing department.`,d=>`Happy birthday, ${d.name}! You're basically a vintage collectible with excellent publicity.`,d=>`Today we celebrate you, ${d.name}, despite your long history of questionable jokes.`,d=>`Happy birthday, ${d.name}! You remain impressively committed to being yourself.`,d=>`Congrats, ${d.name}! Your warranty has been extended one more year. Terms apply.`,d=>`Happy birthday, ${d.name}! You're not old. You're just running the deluxe edition of yourself.`],
+      age:[d=>`At ${d.age}, you'd think you'd have everything figured out, but where's the fun in that?`,d=>`Turning ${d.age} is impressive for someone who still loses their phone sometimes.`,d=>`${d.age} years of experience and you're still improvising. Respect.`,d=>`Congratulations on level ${d.age}. The instruction manual is still missing.`,d=>`${d.age} looks great on you. The candles, however, are filing a complaint.`,d=>`At ${d.age}, you're old enough to know better and young enough to try anyway.`],
+      hobby:[d=>`I hope you get time for ${d.hobby}, since apparently being obsessed with one thing wasn't enough of a personality trait.`,d=>`May your dedication to ${d.hobby} finally earn you the imaginary trophy you've been training for.`,d=>`Your enthusiasm for ${d.hobby} is almost as impressive as your ability to talk about it.`,d=>`Keep enjoying ${d.hobby}, because at this point it's practically your personal brand.`,d=>`May your ${d.hobby} adventures be legendary—or at least entertaining to hear about.`],
+      rel:[d=>`As my ${d.relationship}, you're proof I have excellent taste in people. Mostly.`,d=>`You're my ${d.relationship}, which means I get to tease you and cheer for you.`,d=>`Of all the people I could call my ${d.relationship}, you're definitely the one getting this card.`,d=>`Having you as my ${d.relationship} is wonderful, despite your impressive goofball credentials.`,d=>`You're my ${d.relationship}, so this roast includes a lifetime warranty of affection.`],
+      extra:["Your ability to go through life with confidence and minimal instructions remains unmatched.","I had a sharper joke prepared, but your birthday cake should be the only thing getting sliced.","You remain the perfect mix of lovable and mildly chaotic.","Somehow, your personality has even more layers than the cake.","If birthdays came with performance reviews, yours would say: highly entertaining."],
+      end:["All jokes aside, you're fantastic. Have an amazing birthday!","Keep being wonderfully ridiculous. We wouldn't have you any other way!","Love you, mean it. Now eat cake!","You're a legend, even if I have to say it with a straight face.","I tease because I care. Happy birthday, you wonderful human!","You're one of a kind, and thankfully there's no return policy!"]
+    },
+    pun:{
+      open:[d=>`Happy birthday, ${d.name}! Hope your day is tier-rific, especially the cake.`,d=>`Hey ${d.name}, it's your birthday! Time to party like there's no to-morrow.`,d=>`Happy birthday, ${d.name}! You're one in a melon, and that's no small potatoes.`,d=>`It's your birthday, ${d.name}! Donut let anyone tell you how to celebrate.`,d=>`Happy birthday, ${d.name}! You're simply tea-riffic and totally brew-tiful.`,d=>`Cake my day, ${d.name}! You're a slice above the rest.`,d=>`Happy birthday, ${d.name}! I'm not lion when I say you're pawsome.`,d=>`Dear ${d.name}, I hope you're ready for a bee-utiful birthday.`,d=>`Happy birthday, ${d.name}! You're kind of a big dill, and I relish knowing you.`,d=>`Let's taco 'bout how awesome you are, ${d.name}. Happy birthday!`],
+      age:[d=>`Turning ${d.age} is no small feat. You really take the cake!`,d=>`At ${d.age}, you've got a whole latte reasons to celebrate.`,d=>`Congratulations on ${d.age} years of being egg-straordinary.`,d=>`After ${d.age} trips around the sun, you're still out of this whirl-d.`,d=>`Level ${d.age} unlocked! You're doing a spec-taco-lar job.`,d=>`You've reached ${d.age}, and that deserves a round of a-paws.`],
+      hobby:[d=>hobbyPun(d.hobby)],
+      rel:[d=>`You're my ${d.relationship}, and I think that's pretty fan-cake-tastic.`,d=>`As my ${d.relationship}, you've always been egg-ceptional. No yolk!`,d=>`I'm glad I get to call you my ${d.relationship}. You make life a little more pun-derful.`,d=>`You're the kind of ${d.relationship} who makes every day sunnier-side up.`,d=>`Being able to call you my ${d.relationship} is a big dill. I relish it!`],
+      extra:["I was going to get you a gift about birthdays, but the idea didn't present itself.","May the cake be sweet, the fun endless, and the jokes delightfully cheesy.","Remember, getting older is inevitable; growing up is optional. That's how the cookie crumbles.","These jokes are freshly baked—no half-baked wishes here!","Let's shell-ebrate! You're a cracking good human."],
+      end:["Have an un-fork-gettable birthday!","You're the zest! Have a wonderful birthday!","Sending a whole latte love and a slice of happiness!","Hope your birthday is paws-itively amazing!","Have a grape birthday, and don't forget to raisin the roof!","Okay, I'll stop with the puns now. Just kidding. Have a fan-cake-tastic day!"]
+    },
+    sweet:{
+      open:[d=>`Happy birthday, ${d.name}! The world is brighter with your particular brand of wonderful in it.`,d=>`Dear ${d.name}, you're the kind of person who makes ordinary days feel magical.`,d=>`Happy birthday, ${d.name}! If happiness were confetti, you'd be the reason it's everywhere.`,d=>`It's your birthday, ${d.name}! I hope you know how much joy you bring simply by being yourself.`,d=>`Happy birthday, ${d.name}! You're part sunshine, part chaos, and entirely lovable.`,d=>`To the wonderful ${d.name}: you're one of life's best surprises, right up there with finding cash in an old coat.`,d=>`Happy birthday, ${d.name}! You have a gift for making people smile without even trying.`,d=>`Dear ${d.name}, I hope today reminds you how appreciated and delightfully irreplaceable you are.`,d=>`Happy birthday, ${d.name}! Some people are fresh air; you're the whole sunny afternoon.`,d=>`You're the perfect mix of heart and humor, ${d.name}. Happy birthday!`],
+      age:[d=>`At ${d.age}, you're collecting memories, stories, and so many reasons to celebrate.`,d=>`Turning ${d.age} means the world has had ${d.age} years to appreciate your awesomeness.`,d=>`${d.age} looks lovely on you, because happiness never goes out of style.`,d=>`Here's to ${d.age} years of becoming the amazing person you are today.`,d=>`May this next year, starting at ${d.age}, be full of happy little surprises.`,d=>`Every one of your ${d.age} years is part of a pretty wonderful story.`],
+      hobby:[d=>`I hope you find loads of time for ${d.hobby}, because seeing you enjoy what you love is its own kind of happiness.`,d=>`May your passion for ${d.hobby} bring you countless moments of pure joy.`,d=>`I hope this year brings more ${d.hobby}, happy surprises, and fewer missing socks.`,d=>`The way you light up about ${d.hobby} is one of those things that makes you special.`,d=>`May you get endless opportunities for ${d.hobby}, with someone nearby who brings snacks.`],
+      rel:[d=>`I'm genuinely lucky to have you as my ${d.relationship}, even when we're both being ridiculous.`,d=>`Being able to call you my ${d.relationship} means more than a card could properly explain.`,d=>`You are such a wonderful ${d.relationship}, and I'm grateful for all the laughter we share.`,d=>`Having you as my ${d.relationship} is something I never want to take for granted.`,d=>`I'm so grateful that you're my ${d.relationship}. Life wouldn't feel the same without you.`],
+      extra:["You deserve a day full of lovely surprises and cake that doesn't need to be shared.","May the small things make you smile and the big things turn into wonderful memories.","I hope you feel celebrated in all the ways that matter most to you.","You're appreciated more than you probably realize; consider that your official birthday reminder.","Here's to spontaneous laughter and stories worth retelling."],
+      end:["Sending all the love, all the laughter, and the biggest imaginary hug!","Keep being your lovely, hilarious self. You're wonderful.","I hope this year is kind to you and packed with good surprises.","You deserve every bit of happiness headed your way. And extra frosting.","Love you lots. Please accept this emotionally significant slice of imaginary cake.","I'm so glad you exist. Happy birthday, you absolute gem!"]
+    }
+  };
+
+  function build(d){
+    const bank=libraries[d.vibe];
+    const pieces=[pick(bank.open)(d)],details=[];
+    if(d.age!==null)details.push(pick(bank.age)(d));
+    if(d.hobby)details.push(pick(bank.hobby)(d));
+    if(d.relationship)details.push(pick(bank.rel)(d));
+    pieces.push(...shuffled(details));
+    if(details.length<2||randomIndex(5)===0)pieces.push(pick(bank.extra));
+    pieces.push(pick(bank.end));
+    return pieces.join(' ');
+  }
+  function makeMessage(d){
+    let text,tries=0;
+    do{text=build(d);tries++;}while(tries<40&&(text===previousMessage||history.some(c=>c.text===text)));
+    previousMessage=text;
+    return text;
+  }
+  function saveHistory(){try{localStorage.setItem(KEY,JSON.stringify(history));}catch(e){/* private mode: session-only history */}}
+  function loadHistory(){try{
+    const arr=JSON.parse(localStorage.getItem(KEY)||'[]');
+    return Array.isArray(arr)?arr.filter(x=>x&&typeof x.id==='string'&&typeof x.name==='string'&&typeof x.text==='string'&&typeof x.date==='number'&&Object.prototype.hasOwnProperty.call(vibeNames,x.vibe)).sort((a,b)=>b.date-a.date).slice(0,MAX_HISTORY):[];
+  }catch(e){return [];}}
+  function showCard(card,animated){
+    preview.classList.remove('empty','pop');icon.textContent=vibeIcons[card.vibe];title.textContent='Happy Birthday, '+card.name+'!';message.textContent=card.text;previewTag.textContent=vibeNames[card.vibe];copyButton.disabled=false;
+    if(animated){void preview.offsetWidth;preview.classList.add('pop');}
+  }
+  function emptyPreview(){
+    preview.classList.remove('pop');preview.classList.add('empty');icon.textContent='💌';title.textContent='Something fabulous goes here!';message.textContent='Fill in the details, choose a vibe, and hit “New Card” to make someone\'s birthday a little more legendary.';previewTag.textContent='Waiting for magic ✨';copyButton.disabled=true;
+  }
+  function announce(s){status.textContent=s;}
+  function generate(){
+    const d=getDetails();if(!d)return;
+    const card={id:Date.now()+'-'+Math.random().toString(36).slice(2),name:d.displayName,vibe:d.vibe,text:makeMessage(d),date:Date.now()};
+    history.unshift(card);history=history.slice(0,MAX_HISTORY);saveHistory();showCard(card,true);renderHistory();
+    announce(pick(['Ta-da! A brand-new birthday masterpiece! ✨','Freshly baked birthday brilliance! 🎂','This one is ready to spread smiles! 💖','New card unlocked. Birthday panic defeated! 🥳']));
+  }
+  function formatDate(t){const d=new Date(t);return Number.isNaN(d.getTime())?'Saved card':d.toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});}
+  function element(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
+  function renderHistory(){
+    list.replaceChildren();count.textContent=history.length+' '+(history.length===1?'card':'cards');
+    if(!history.length){const li=element('li','history-empty');li.append(element('div','', '🎈'),element('b','','No birthday brilliance yet!'),element('p','','Your cards will appear here once you make one.'));list.append(li);return;}
+    const frag=document.createDocumentFragment();
+    history.forEach((card,i)=>{
+      const li=element('li','history-item'),head=element('div','history-line');head.append(element('h3','recipient',(i===0?'✨ ':'')+card.name),element('span','date',formatDate(card.date)));
+      const badge=element('span','history-vibe',vibeIcons[card.vibe]+' '+vibeNames[card.vibe]);
+      const content=element('p','history-text',card.text);
+      const actions=element('div','history-actions'),copy=element('button','copy-small','📋 Copy');copy.type='button';copy.setAttribute('aria-label','Copy birthday card for '+card.name);copy.addEventListener('click',()=>copyText(card.text,copy));
+      actions.append(element('span','date',i===0?'Newest creation':'Saved creation'),copy);li.append(head,badge,content,actions);frag.append(li);
+    });
+    list.append(frag);
+  }
+  async function writeClipboard(text){
+    if(navigator.clipboard&&navigator.clipboard.writeText){try{await navigator.clipboard.writeText(text);return true;}catch(e){/* fall back */}}
+    const area=document.createElement('textarea');area.value=text;area.readOnly=true;area.setAttribute('aria-hidden','true');area.style.cssText='position:fixed;left:-9999px;top:0;opacity:0';const focused=document.activeElement;document.body.append(area);
+    let ok=false;try{area.focus();area.select();area.setSelectionRange(0,text.length);ok=document.execCommand('copy');}catch(e){}finally{area.remove();if(focused&&typeof focused.focus==='function')focused.focus();}return ok;
+  }
+  async function copyText(text,button){
+    const original=button.textContent;
+    const success=await writeClipboard(text);
+    if(success){announce('Copied! Go make somebody’s birthday! 💖');button.textContent='✓ Copied!';setTimeout(()=>{if(button.isConnected&&button.textContent==='✓ Copied!')button.textContent=original;},1700);}
+    else announce('Clipboard access unavailable here. Select the card message and copy it manually.');
+  }
+  function clearAll(){
+    if(history.length&&!confirm('Clear all inputs and permanently erase the saved cards on this device?'))return;
+    Object.values(input).forEach(x=>x.value='');document.querySelector('input[name="vibe"][value="light"]').checked=true;
+    history=[];previousMessage='';try{localStorage.removeItem(KEY);}catch(e){}
+    emptyPreview();renderHistory();announce('Fresh start! Your canvas is clean. 🧼');input.name.focus();
+  }
+  newButton.addEventListener('click',generate);
+  copyButton.addEventListener('click',()=>{if(history.length)copyText(history[0].text,copyButton);});
+  clearButton.addEventListener('click',clearAll);
+  Object.values(input).forEach(x=>x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();generate();}}));
+  input.age.addEventListener('input',()=>input.age.setCustomValidity(''));
+  document.querySelectorAll('input[name="vibe"]').forEach(x=>x.addEventListener('change',()=>{if(x.checked)announce(vibeIcons[x.value]+' '+vibeNames[x.value]+' selected. Hit New Card!');}));
+  renderHistory();if(history.length){showCard(history[0],false);previousMessage=history[0].text;}else emptyPreview();
+})();
+</script>
+</body>
+</html>
